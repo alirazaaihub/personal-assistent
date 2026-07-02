@@ -86,7 +86,7 @@ def _run_heartbeat():
     hb = HEARTBEAT_FILE.read_text(encoding="utf-8").strip()
     if not hb:
         return
-    cron_config = {"configurable": {"thread_id": "openclaw_heartbeat"}}
+    cron_config = {"configurable": {"thread_id": "autoagent_heartbeat"}}
     try:
         result = app.invoke(
             {"messages": [HumanMessage(content=f"CRON PULSE:\n{hb}")], "route": ""},
@@ -133,7 +133,7 @@ def hitl_loop(config: dict):
             final = state.values["messages"][-1]
             text = extract_text(final)
             if text:
-                print(f"\n🤖 OpenClaw:\n{text}")
+                print(f"\n🤖 autoagent:\n{text}")
             break
 
         last = state.values["messages"][-1]
@@ -170,11 +170,11 @@ def hitl_loop(config: dict):
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
-    thread_id = "openclaw_master"
+    thread_id = "autoagent_master"
     config = {"configurable": {"thread_id": thread_id}}
 
     print("\n" + "═" * 60)
-    print("  🦅 OpenClaw  —  Autonomous AI Agent")
+    print("  🦅 autoagent  —  Autonomous AI Agent")
     print("  Commands: exit | flush | new")
     print("═" * 60 + "\n")
 
