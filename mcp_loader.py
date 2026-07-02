@@ -113,7 +113,7 @@ async def _fetch_mcp_tools_async():
 
 def _wrap_async_tool_sync(async_tool) -> Tool:
     """
-    LangChain MCP tools async hote hain. OpenClaw ka parallel_tool_node
+    LangChain MCP tools async hote hain. Autoagent ka parallel_tool_node
     sync `.invoke()` call karta hai — isliye ek sync wrapper banate hain
     jo background event loop par async tool ko run karta hai.
     """
@@ -135,7 +135,7 @@ def _wrap_async_tool_sync(async_tool) -> Tool:
 
 def get_mcp_tools() -> list:
     """
-    Main entry point — OpenClaw ke get_all_tools() se yahi call hoga.
+    Main entry point — Autoagent ke get_all_tools() se yahi call hoga.
     Cached rehta hai taake har query pe dobara connect na karna pade.
     Agar mcp_config.json exist nahi karti, khaali list return hoti hai.
     """
