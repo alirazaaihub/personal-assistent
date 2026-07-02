@@ -1,7 +1,7 @@
 """
 whatsapp_server.py
 --------------------
-OpenClaw ko WhatsApp se connect karta hai.
+autoagent ko WhatsApp se connect karta hai.
 Includes built-in scheduler — main.py ki zaroorat nahi.
 
 Flow:
@@ -28,7 +28,7 @@ from dotenv import load_dotenv
 from groq import Groq
 from langchain_core.messages import HumanMessage, ToolMessage
 
-from agent_graph import app as openclaw_app
+from agent_graph import app as autoagent_app
 from config import BASE_DIR, SCHEDULE_FILE, log
 
 load_dotenv(override=True)
@@ -58,8 +58,8 @@ def extract_text(msg) -> str:
     return (content or "").strip()
 
 
-# ── Core: Run OpenClaw agent ───────────────────────────────────────────────────
-def run_openclaw(user_number: str, user_text: str) -> str:
+# ── Core: Run autoagent agent ───────────────────────────────────────────────────
+def run_autoagent(user_number: str, user_text: str) -> str:
     """
     WhatsApp number ko thread_id ki tarah use karta hai.
     HITL: safe tools auto-approve, dangerous auto-deny.
@@ -68,13 +68,13 @@ def run_openclaw(user_number: str, user_text: str) -> str:
     config = {"configurable": {"thread_id": thread_id}}
 
     try:
-        openclaw_app.invoke(
+        autoagent_app.invoke(
             {"messages": [HumanMessage(content=user_text)], "route": ""},
             config
         )
 
         for _ in range(10):
-            state = openclaw_app.get_state(config)
+            state = autoagent_app.get_state(config)
 
             if not state.next:
                 final = state.values["messages"][-1]
@@ -84,7 +84,7 @@ def run_openclaw(user_number: str, user_text: str) -> str:
             has_tools = hasattr(last, "tool_calls") and last.tool_calls
 
             if not has_tools:
-                openclaw_app.invoke(None, config)
+                autoagent_app.invoke(None, config)
                 continue
 
             dangerous = [tc for tc in last.tool_calls if tc["name"] in DANGEROUS_TOOLS]
@@ -97,10 +97,10 @@ def run_openclaw(user_number: str, user_text: str) -> str:
                     )
                     for tc in last.tool_calls
                 ]
-                openclaw_app.update_state(config, {"messages": rejections}, as_node="tools_hitl")
-                openclaw_app.invoke(None, config)
+                autoagent_app.update_state(config, {"messages": rejections}, as_node="tools_hitl")
+                autoagent_app.invoke(None, config)
             else:
-                openclaw_app.invoke(None, config)
+                autoagent_app.invoke(None, config)
 
         return "Request took too long. Please try a simpler query."
 
@@ -188,7 +188,7 @@ async def webhook(request: Request):
         if msg["type"] == "text":
             user_text = msg["text"]["body"]
             log("WHATSAPP IN", f"From {user_number}: {user_text}")
-            answer = run_openclaw(user_number, user_text)
+            answer = run_autoagent(user_number, user_text)
             send_text_message(user_number, answer)
 
         elif msg["type"] == "audio":
@@ -202,7 +202,7 @@ async def webhook(request: Request):
                 send_text_message(user_number, "Samajh nahi aaya. Dobara bolein.")
                 return {"status": "ok"}
             log("WHATSAPP TRANSCRIBED", user_text)
-            answer = run_openclaw(user_number, user_text)
+            answer = run_autoagent(user_number, user_text)
             send_text_message(user_number, answer)
 
     except (KeyError, IndexError) as e:
@@ -234,7 +234,7 @@ def _dispatch_scheduled_task(action: str, arg1: str, arg2: str):
             return
 
         log("SCHEDULER AGENT", f"Running task for {to_number}: {prompt}")
-        result = run_openclaw(to_number, prompt)
+        result = run_autoagent(to_number, prompt)
         send_text_message(to_number, f"⏰ Scheduled Task:\n\n{result}")
 
     elif action == "write_file":
@@ -256,7 +256,7 @@ def _dispatch_scheduled_task(action: str, arg1: str, arg2: str):
             f'$n=New-Object System.Windows.Forms.NotifyIcon;'
             f'$n.Icon=[System.Drawing.SystemIcons]::Information;'
             f'$n.Visible=$true;'
-            f'$n.ShowBalloonTip(5000,"OpenClaw","{arg1}",'
+            f'$n.ShowBalloonTip(5000,"autoagent","{arg1}",'
             f'[System.Windows.Forms.ToolTipIcon]::Info)'
         )
         subprocess.Popen(["powershell", "-Command", ps],
@@ -339,4 +339,4 @@ async def startup():
 
 @app.get("/")
 async def root():
-    return {"status": "OpenClaw WhatsApp bridge running with scheduler"}
+    return {"status": "autoagent WhatsApp bridge running with scheduler"}
