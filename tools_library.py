@@ -126,7 +126,7 @@ def download_from_sandbox(sandbox_path: str) -> str:
 
 @tool
 def execute_system_command(command: str) -> str:
-    """Run a terminal command in D:/openclaw workspace. Use 'uv run' for Python."""
+    """Run a terminal command in D:/Autoagent workspace. Use 'uv run' for Python."""
     try:
         r = subprocess.run(
             command, shell=True, capture_output=True,
