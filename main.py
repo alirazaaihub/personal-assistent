@@ -44,7 +44,7 @@ ACTIONS = {
         f'$n=New-Object System.Windows.Forms.NotifyIcon;'
         f'$n.Icon=[System.Drawing.SystemIcons]::Information;'
         f'$n.Visible=$true;'
-        f'$n.ShowBalloonTip(5000,"OpenClaw","{a1}",'
+        f'$n.ShowBalloonTip(5000,"Autoagent","{a1}",'
         f'[System.Windows.Forms.ToolTipIcon]::Info)'
     ], creationflags=subprocess.CREATE_NO_WINDOW),
 }
