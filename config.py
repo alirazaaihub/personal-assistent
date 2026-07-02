@@ -6,7 +6,7 @@ SKILLS_DIR     = BASE_DIR / "skills"
 LOGS_DIR       = BASE_DIR / "logs"
 DOWNLOADS_DIR  = BASE_DIR / "downloads"
 CHROMA_DIR     = BASE_DIR / "chroma_db"
-CHECKPOINT_DB  = str(BASE_DIR / "openclaw_state.db")
+CHECKPOINT_DB  = str(BASE_DIR / "Autoagent_state.db")
 
 SOUL_FILE      = BASE_DIR / "SOUL.md"
 HEARTBEAT_FILE = BASE_DIR / "HEARTBEAT.md"
@@ -32,9 +32,9 @@ def seed_workspace():
     """Creates required workspace files on first run."""
     if not SOUL_FILE.exists():
         SOUL_FILE.write_text(
-            "# SOUL.md — OpenClaw Identity\n\n"
+            "# SOUL.md — Autoagent Identity\n\n"
             "## Core Persona\n"
-            "You are OpenClaw, an elite autonomous AI agent built on LangGraph + GPT-4o.\n"
+            "You are Autoagent, an elite autonomous AI agent built on LangGraph + GPT-4o.\n"
             "You have full access to local file system, terminal, E2B sandbox, and web search.\n\n"
             "## Behavioral Rules\n"
             "- Think before acting. Analyze before running any command.\n"
