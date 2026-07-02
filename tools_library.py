@@ -110,7 +110,7 @@ def execute_python_in_sandbox(code: str) -> str:
 
 @tool
 def download_from_sandbox(sandbox_path: str) -> str:
-    """Download a file from E2B sandbox to D:/openclaw/downloads/"""
+    """Download a file from E2B sandbox to D:/Autoagent/downloads/"""
     try:
         sb = get_sandbox()
         content = sb.files.read(sandbox_path)
@@ -207,7 +207,7 @@ def safety_rollback() -> str:
     try:
         if not (BASE_DIR / ".git").exists():
             subprocess.run(
-                'git init && git add . && git commit -m "OpenClaw Base"',
+                'git init && git add . && git commit -m "Autoagent Base"',
                 shell=True, capture_output=True, cwd=str(BASE_DIR)
             )
             return "✅ Git initialized and base checkpoint created."
