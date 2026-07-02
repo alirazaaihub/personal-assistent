@@ -1,6 +1,6 @@
-# OpenClaw
+# AutoAgent
 
-**OpenClaw** is an autonomous AI agent built on [LangGraph](https://github.com/langchain-ai/langgraph) and GPT-4o. It combines a conversational CLI, optional WhatsApp bridge, long- and short-term memory, a pluggable tool system, and scheduled background tasks into a single workspace-aware assistant.
+**AutoAgent** is an autonomous AI agent built on [LangGraph](https://github.com/langchain-ai/langgraph) and GPT-4o. It combines a conversational CLI, optional WhatsApp bridge, long- and short-term memory, a pluggable tool system, and scheduled background tasks into a single workspace-aware assistant.
 
 The agent can read and write files, run shell commands (with human approval), execute Python in an E2B cloud sandbox, search the web, connect to external MCP servers, and learn reusable **skills** from successful code runs.
 
@@ -29,7 +29,7 @@ The agent can read and write files, run shell commands (with human approval), ex
 
 ## Architecture
 
-OpenClaw is orchestrated as a LangGraph state machine. Incoming messages are classified, optionally compressed by working memory, then handled by either a lightweight direct LLM path or the full cognitive agent with tools.
+autoagent is orchestrated as a LangGraph state machine. Incoming messages are classified, optionally compressed by working memory, then handled by either a lightweight direct LLM path or the full cognitive agent with tools.
 
 ```mermaid
 flowchart TD
@@ -98,7 +98,7 @@ claw/
 ├── TOOLS.md                # Auto-generated tool registry
 ├── mcp_config.json         # MCP server config
 ├── pyproject.toml          # Dependencies (uv/pip)
-└── openclaw_state.db       # LangGraph SQLite checkpointer
+└── autoagent_state.db       # LangGraph SQLite checkpointer
 ```
 
 ---
@@ -211,7 +211,7 @@ Expose the server publicly (e.g. with ngrok or Cloudflare Tunnel) and register t
 - Safe tools run automatically; dangerous tools (`execute_system_command`, `safety_rollback`) are auto-denied for safety.
 - Voice messages are transcribed via Groq Whisper before being sent to the agent.
 
-Health check: `GET /` returns `{"status": "OpenClaw WhatsApp bridge is running"}`.
+Health check: `GET /` returns `{"status": "autoagent WhatsApp bridge is running"}`.
 
 ---
 
@@ -338,7 +338,7 @@ Activity is appended to daily markdown logs in `logs/YYYY-MM-DD.md`, including:
 - **MCP validation** — Configurations are structure-checked and connection-tested before being kept.
 - **Git rollback** — `safety_rollback` resets the workspace to the last Git commit (initializes Git if needed).
 
-Treat `.env`, API keys, and `openclaw_state.db` as sensitive. Do not commit secrets to version control.
+Treat `.env`, API keys, and `autoagent_state.db` as sensitive. Do not commit secrets to version control.
 
 ---
 
@@ -376,7 +376,7 @@ Customize agent behavior by editing `SOUL.md`. Add scheduled tasks in `SCHEDULE.
 No license file is included in this repository. Add one before public distribution.
 
 ---
-
+linkedin www.linkedin.com/in/alirazaaihub
 ## Acknowledgments
 
 Built with [LangGraph](https://github.com/langchain-ai/langgraph), [LangChain](https://github.com/langchain-ai/langchain), [E2B](https://e2b.dev/), [Tavily](https://tavily.com/), and the [Model Context Protocol](https://modelcontextprotocol.io/).
