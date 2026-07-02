@@ -1,7 +1,7 @@
 """
 mcp_loader.py
 --------------
-OpenClaw ke liye MCP tools loader.
+Autoagent ke liye MCP tools loader.
 
 Kya karta hai:
   - mcp_config.json (agar exist karti hai) se MCP servers connect karta hai
@@ -9,7 +9,7 @@ Kya karta hai:
   - Sab tools ko sync wrapper mein convert karta hai taake
     get_all_tools() (sync codebase) ke saath seamlessly merge ho saken
   - mcp_config.json missing ho to silently empty list return karta hai
-    (OpenClaw bina MCP ke bhi normally chalta rahega)
+    (AutoAgent bina MCP ke bhi normally chalta rahega)
 
 LangGraph create_react_agent yahan use NAHI hota — yeh sirf tools
 fetch karta hai jo tera apna cognitive_node consume karega.
