@@ -55,7 +55,7 @@ def _build_base_prompt(query: str = "") -> str:
 
     if not soul:
         soul = (
-            "You are OpenClaw, an autonomous AI agent.\n"
+            "You are Autoagent, an autonomous AI agent.\n"
             "Use tools to solve tasks. Never hallucinate results.\n"
             "Check skills/ before writing new code. Save working code as a skill.\n"
             "Be concise — show results, not process narration.\n"
