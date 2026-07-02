@@ -85,9 +85,8 @@ claw/
 ├── mcp_config_loader.py    # MCP config parser
 ├── whatsapp_server.py      # WhatsApp webhook server
 ├── config.py               # Paths and workspace setup
-├── memory/
-│   ├── short_term.py       # Working memory
-│   └── long_term.py        # ChromaDB long-term memory
+│-- short_term.py       # Working memory
+│-- long_term.py        # ChromaDB long-term memory
 ├── skills/                 # User-defined Python skills (auto-loaded)
 ├── logs/                   # Daily markdown activity logs
 ├── downloads/              # Files pulled from E2B sandbox
