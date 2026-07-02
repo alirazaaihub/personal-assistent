@@ -18,7 +18,7 @@ from config import CHROMA_DIR, log
 from dotenv import load_dotenv
 load_dotenv(override=True)
 
-COLLECTION_NAME = "openclaw_memories"
+COLLECTION_NAME = "Autoagent_memories"
 
 # ── Embedding model (Google) ──────────────────────────────────────────────────
 def get_embedding_fn():
